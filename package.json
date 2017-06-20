@@ -1,0 +1,22 @@
+{
+  "name": "mead",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Andrey7287/mead.git"
+  },
+  "author": "Alekseev A.S.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Andrey7287/mead/issues"
+  },
+  "homepage": "https://github.com/Andrey7287/mead#readme",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}
