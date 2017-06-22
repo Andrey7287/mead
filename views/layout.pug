@@ -1,0 +1,17 @@
+doctype html
+html
+  head
+    title= 'no title'
+    link(rel='stylesheet', href='/scss/main.css')
+  body
+    header
+      nav
+        ul
+          each link, name in {'home': '/', 'about': '/about', 'contacts': '/contacts'}
+            li
+              a(href=link)= name 
+    main
+      block content
+    footer
+      div.footer
+        div.copyright= 'all right resived'

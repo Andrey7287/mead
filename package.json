@@ -1,10 +1,11 @@
 {
   "name": "mead",
   "version": "1.0.0",
-  "description": "",
-  "main": "dist/index.js",
+  "description": "none",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,10 @@
   },
   "homepage": "https://github.com/Andrey7287/mead#readme",
   "dependencies": {
-    "express": "^4.15.3"
+    "express": "^4.15.3",
+    "express-compile-sass": "^3.0.4",
+    "node-sass-middleware": "^0.11.0",
+    "path": "^0.12.7",
+    "pug": "^2.0.0-rc.2"
   }
 }
