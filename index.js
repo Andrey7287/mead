@@ -3,7 +3,9 @@ const express = require('express'),
       pug = require('pug').create,
 			scss = require('node-sass-middleware'), 
       path = require('path'),
-			publicPath = path.join(__dirname, 'public');
+			publicPath = path.join(__dirname, 'public'),
+			fortune = require('./lib/fortune');
+	
 
 app.set('port', process.env.PORT || 3000);
 
@@ -25,7 +27,10 @@ app.get('/', (req, res)=>{
 });
 
 app.get('/about', (req, res)=>{
-	res.render('about');
+	res.render('about', { 
+		title: 'About',
+		fortune: fortune.getFortune()
+	});
 })
 app.use((req, res)=>{
 	res.status(400);
@@ -39,3 +44,4 @@ app.use((err, req, res, next)=>{
 });
 
 app.listen(app.get('port'), ()=>console.log(`Express is runing on localhost:${app.get('port')} press ctrl+c for closing up`));
+
