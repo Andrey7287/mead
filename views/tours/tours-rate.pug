@@ -1,0 +1,14 @@
+extends ../layout.pug
+
+block content
+  h1  Tour rates
+  .form 
+    form(name="group")
+      input(type="hidden" name="referrer")
+      label(for="idName")
+      input(type="text" id="idName" name="name")
+      label(for="idMail")
+      input(type="email" id="idMail" name="email")
+      input(type="submit" value="submit")
+    script.
+     var i = 'iii'; 

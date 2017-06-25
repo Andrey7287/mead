@@ -23,5 +23,9 @@
     "node-sass-middleware": "^0.11.0",
     "path": "^0.12.7",
     "pug": "^2.0.0-rc.2"
+  },
+  "devDependencies": {
+    "chai": "^4.0.2",
+    "mocha": "^3.4.2"
   }
 }

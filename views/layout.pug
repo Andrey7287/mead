@@ -2,7 +2,9 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/scss/main.css')
+    link(rel="stylesheet", href="/scss/main.css")
+    if showTests
+      link(rel="stylesheet", href="/vendor/mocha.css")
   body
     header
       img(src="/img/logo.png", alt="logo")
@@ -16,3 +18,10 @@ html
     footer
       div.footer
         div.copyright= 'all right resived'
+    if showTests
+      div#mocha
+      script(src="/vendor/mocha.js")
+      script(src="/vendor/chai.js")
+      script(src="/tests/tests.js")
+      if pageTestScript
+        script(src=`/tests/${pageTestScript}.js`)

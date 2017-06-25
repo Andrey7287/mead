@@ -4,7 +4,8 @@ const express = require('express'),
 			scss = require('node-sass-middleware'), 
       path = require('path'),
 			publicPath = path.join(__dirname, 'public'),
-			fortune = require('./lib/fortune');
+			fortune = require('./lib/fortune'),
+			isProd = app.get('env') === 'production';
 	
 
 app.set('port', process.env.PORT || 3000);
@@ -22,16 +23,34 @@ app.use(scss({
 
 app.use(express.static(publicPath));
 
+app.use((req,res,next)=>{
+	res.locals.showTests = !isProd && req.query.test === '1';
+	console.log(res.locals.showTests);
+	next();
+});
+
 app.get('/', (req, res)=>{
-	res.render('index');
+	res.render('index', {
+		title: 'Home'
+	});
 });
 
 app.get('/about', (req, res)=>{
 	res.render('about', { 
 		title: 'About',
-		fortune: fortune.getFortune()
+		fortune: fortune.getFortune(),
+		pageTestScript: 'tests-about'
 	});
-})
+});
+
+app.get('/tours/tours-rate', (req, res)=>{
+	res.render('tours/tours-rate');
+});
+
+app.get('/tours/kwai', (req, res)=>{
+	res.render('tours/tours-rate');
+});
+
 app.use((req, res)=>{
 	res.status(400);
 	res.render('404');
