@@ -1,14 +1,18 @@
 extends ../layout.pug
 
 block content
-  h1  Tour rates
+  h1  Tours rate request
   .form 
     form(name="group")
-      input(type="hidden" name="referrer")
-      label(for="idName")
-      input(type="text" id="idName" name="name")
-      label(for="idMail")
-      input(type="email" id="idMail" name="email")
+      input(type="hidden" name="referrer")#idReferrer
+      label(for="idName") Tour
+      input(type="text" name="name")#idName
+      br
+      label(for="idMail") group
+      input(type="email" name="email")#idMail
+      br
       input(type="submit" value="submit")
-    script.
-     var i = 'iii'; 
+      br
+      br
+  script.
+    document.forms.group.referrer.value = document.referrer;

@@ -48,7 +48,7 @@ app.get('/tours/tours-rate', (req, res)=>{
 });
 
 app.get('/tours/kwai', (req, res)=>{
-	res.render('tours/tours-rate');
+	res.render('tours/kwai');
 });
 
 app.use((req, res)=>{
