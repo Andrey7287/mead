@@ -44,11 +44,15 @@ app.get('/about', (req, res)=>{
 });
 
 app.get('/tours/tours-rate', (req, res)=>{
-	res.render('tours/tours-rate');
+	res.render('tours/tours-rate', {
+		title: 'tours rate'
+	});
 });
 
 app.get('/tours/kwai', (req, res)=>{
-	res.render('tours/kwai');
+	res.render('tours/kwai', {
+		title: 'kwai'
+	});
 });
 
 app.use((req, res)=>{
