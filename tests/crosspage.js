@@ -1,4 +1,5 @@
-const Browser = require('zombie');
+const Browser = require('zombie'),
+      assert = require('chai').assert;
 var browser;
 
 suite('Crosspage', () => {
@@ -13,13 +14,11 @@ suite('Crosspage', () => {
 
     browser.visit(referrer, ()=>{
       browser.clickLink('.request-rate', ()=>{
-        setTimeout(function() {
-          browser.assert.input('#idReferrer', 'referrer');  
-          
-        }, 1000);
+        browser.assert.input('#idReferrer', referrer);
         done();
       });
-    });
+    });    
+
   });
 
   // test('Rates request for group tour at Oregon', (done)=>{
@@ -32,11 +31,11 @@ suite('Crosspage', () => {
   //   });
   // });
 
-  test('If direct opening, referrer have to be empty', (done)=>{
-      browser.visit('http://localhost:3000/tours/tours-rate', ()=>{
-          browser.assert.input('#idReferrer', '');
-          done();
-        });
-    });
+  // test('If direct opening, referrer have to be empty', (done)=>{
+  //     browser.visit('http://localhost:3000/tours/tours-rate', ()=>{
+  //         browser.assert.input('#idReferrer', '');
+  //         done();
+  //       });
+  //   });
 
 });

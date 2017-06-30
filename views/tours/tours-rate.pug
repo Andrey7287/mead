@@ -4,7 +4,7 @@ block content
   h1  Tours rate request
   .form 
     form(name="group")
-      input(type="hidden" name="referrer")#idReferrer
+      input(type="hidden" name="referrer" value="test")#idReferrer
       label(for="idName") Tour
       input(type="text" name="name")#idName
       br
@@ -15,4 +15,8 @@ block content
       br
       br
   script.
-    document.forms.group.referrer.value = document.referrer;
+    document.addEventListener("DOMContentLoaded", function(e){
+      var inputRef = document.getElementById('idReferrer');
+      inputRef.value = document.referrer;
+      document.forms.group.referrer.value = document.referrer;
+    });
