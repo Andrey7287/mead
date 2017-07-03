@@ -22,6 +22,7 @@ app.use(scss({
 
 app.use(express.static(publicPath));
 
+
 app.use((req,res,next)=>{
 	res.locals.showTests = !isProd && req.query.test === '1';
 	console.log(res.locals.showTests);
