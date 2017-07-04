@@ -8,9 +8,10 @@ html
   body
     header
       img(src="/img/logo.png", alt="logo")
+      h3(hidden) test test test
       nav
         ul
-          each link, name in {'home': '/', 'about': '/about', 'contacts': '/contacts'}
+          each link, name in {'home': '/', 'about': '/about?q=1', 'contacts': '/contacts'}
             li
               a(href=link)= name 
     main

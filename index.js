@@ -6,7 +6,6 @@ const express = require('express'),
 			publicPath = path.join(__dirname, 'public'),
 			fortune = require('./lib/fortune'),
 			isProd = app.get('env') === 'production';
-	
 
 app.set('port', process.env.PORT || 3000);
 
@@ -22,6 +21,7 @@ app.use(scss({
 }));
 
 app.use(express.static(publicPath));
+
 
 app.use((req,res,next)=>{
 	res.locals.showTests = !isProd && req.query.test === '1';

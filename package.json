@@ -3,9 +3,19 @@
   "version": "1.0.0",
   "description": "none",
   "main": "index.js",
+  "watch": {
+    "run-node": {
+      "patterns": [
+        "views",
+        "public"
+      ],
+      "extensions": "pug,scss,js"
+    }
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index"
+    "test": "mocha -u tdd -R spec tests/crosspage",
+    "start": "npm-watch run-node",
+    "run-node": "node index"
   },
   "repository": {
     "type": "git",
@@ -27,6 +37,7 @@
   "devDependencies": {
     "chai": "^4.0.2",
     "mocha": "^3.4.2",
+    "npm-watch": "^0.2.0",
     "zombie": "^5.0.7"
   }
 }
