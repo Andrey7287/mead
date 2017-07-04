@@ -54,6 +54,13 @@ app.get('/tours/kwai', (req, res)=>{
 		title: 'kwai'
 	});
 });
+app.get('/headers', (req, res)=>{
+	res.set('Content-Type', 'text/plain');
+	console.log(req.headers);
+	console.log(typeOf(req.headers));
+
+
+});
 
 app.use((req, res)=>{
 	res.status(400);
