@@ -50,16 +50,20 @@ app.get('/tours/tours-rate', (req, res)=>{
 });
 
 app.get('/tours/kwai', (req, res)=>{
+	res.locals = {
+		title: 'Test'
+	}
 	res.render('tours/kwai', {
 		title: 'kwai'
 	});
 });
 app.get('/headers', (req, res)=>{
 	res.set('Content-Type', 'text/plain');
-	console.log(req.headers);
-	console.log(typeOf(req.headers));
-
-
+	var s = '';
+	for( var method in req.headers){
+		s += method + ': ' + req.headers[method] + '\n';
+	}
+	res.send(s);
 });
 
 app.use((req, res)=>{
