@@ -19,6 +19,8 @@ html
     footer
       div.footer
         div.copyright= 'all right resived'
+    if scriptForPage
+      script(src="/js/test-funcs.js")
     if showTests
       div#mocha
       script(src="/vendor/mocha.js")

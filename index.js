@@ -5,6 +5,7 @@ const express = require('express'),
       path = require('path'),
 			publicPath = path.join(__dirname, 'public'),
 			fortune = require('./lib/fortune'),
+			getWeatherData = require('./lib/getWeatherData'), //not use
 			isProd = app.get('env') === 'production';
 
 app.set('port', process.env.PORT || 3000);
@@ -28,6 +29,12 @@ app.use((req,res,next)=>{
 	console.log(res.locals.showTests);
 	next();
 });
+
+// app.use((req,res,next)=>{
+// 	if( !res.locals.partials ) res.locals.partials = {};
+// 	res.locals.partials.weather = getWeatherData();
+// 	next();
+// });
 
 app.get('/', (req, res)=>{
 	res.render('index', {
@@ -64,6 +71,13 @@ app.get('/headers', (req, res)=>{
 		s += method + ': ' + req.headers[method] + '\n';
 	}
 	res.send(s);
+});
+app.get('/test-funcs', (req, res)=>{
+	res.render('test-funcs', {
+		title: 'test-funcs',
+		pageTestScript: 'test-funcs',
+		scriptForPage: 'test-funcs'
+	});
 });
 
 app.use((req, res)=>{
