@@ -2,7 +2,7 @@ extends layout
 
 block content
   h2 Subscribe
-    form(method="POST" action="/process")
+    form(method="POST" name="subscribe" action="/process?form=subscribe")
       input(type="hidden" name="ref" value=""+ref)
       label(for="fieldName") name<br />
       input(type="text" name="name" id="fieldName" placeholder="Name")
@@ -13,6 +13,23 @@ block content
       <br />
       <br />
       button(type="submit") subscribe
+  #container
+  script.
+    'use strict'
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const subscribeForm = document.forms.subscribe; 
+      subscribeForm.addEventListener('submit', e=>{
+        console.log(e.target.elements);
+        e.preventDefault();
+        let action = subscribeForm.getAttribute('action'),
+            container = document.getElementById('container'),
+            ajax = fetch(action, {
+              method: 'post',
+              body: this
+            });
+        console.log(this, e, ajax);
+        //method.body
 
-      
-
+      });
+    });
+  

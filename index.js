@@ -57,11 +57,15 @@ app.get('/news', (req,res)=>{
 });
 
 app.post('/process', (req,res)=>{
-	console.log(`Form from: ${req.query.form}`);
-	console.log(`ref: ${req.body.ref}`);
-	console.log(`Name: ${req.body.name}`);
-	console.log(`Email: ${req.body.email}`);
-	res.redirect(301, '/done');
+	// console.log(`Form from: ${req.query.form}\n
+	// 						ref: ${req.body.ref}\n
+	// 						Name: ${req.body.name}\n
+	// 						Email: ${req.body.email}`);
+	if (req.xhr || req.accepts('json.html') === 'json' ) {
+		res.send({ success: true });
+	} else {
+		res.redirect(303, '/done' );
+	}
 });
 
 app.get('/done', (req,res)=>{

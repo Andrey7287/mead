@@ -5,3 +5,5 @@ h1 {
 p{
   margin: 22px 0;
 }
+input:invalid {border-color: red;}
+input:valid {border-color: green;}
