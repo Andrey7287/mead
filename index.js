@@ -3,9 +3,10 @@ const express = require('express'),
       pug = require('pug').create,
 			scss = require('node-sass-middleware'), 
       path = require('path'),
+			bodyParser = require('body-parser'),
 			publicPath = path.join(__dirname, 'public'),
 			fortune = require('./lib/fortune'),
-			getWeatherData = require('./lib/getWeatherData'), //not use
+			getWeatherData = require('./lib/getWeather'), //not use
 			isProd = app.get('env') === 'production';
 
 app.set('port', process.env.PORT || 3000);
@@ -27,6 +28,7 @@ app.use(express.static(publicPath));
 app.use((req,res,next)=>{
 	res.locals.showTests = !isProd && req.query.test === '1';
 	console.log(res.locals.showTests);
+	console.log(`Prodaction: ${isProd}`);
 	next();
 });
 
@@ -36,9 +38,35 @@ app.use((req,res,next)=>{
 // 	next();
 // });
 
+app.use(bodyParser.urlencoded({
+	extended: true
+}));
+
 app.get('/', (req, res)=>{
 	res.render('index', {
 		title: 'Home'
+	});
+});
+
+
+app.get('/news', (req,res)=>{
+	res.render('news', {
+		title: 'subscribe',
+		ref: 'something'
+	});
+});
+
+app.post('/process', (req,res)=>{
+	console.log(`Form from: ${req.query.form}`);
+	console.log(`ref: ${req.body.ref}`);
+	console.log(`Name: ${req.body.name}`);
+	console.log(`Email: ${req.body.email}`);
+	res.redirect(301, '/done');
+});
+
+app.get('/done', (req,res)=>{
+	res.render('done', {
+		title: 'succes'
 	});
 });
 

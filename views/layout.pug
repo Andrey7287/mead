@@ -11,7 +11,7 @@ html
       h3(hidden) test test test
       nav
         ul
-          each link, name in {'home': '/', 'about': '/about?q=1', 'contacts': '/contacts'}
+          each link, name in {'home': '/', 'about': '/about?q=1', 'contacts': '/contacts', 'tdd': '/test-funcs?test=1', 'news': '/news'}
             li
               a(href=link)= name 
     main

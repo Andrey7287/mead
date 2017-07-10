@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h2 Subscribe
+    form(method="POST" action="/process")
+      input(type="hidden" name="ref" value=""+ref)
+      label(for="fieldName") name<br />
+      input(type="text" name="name" id="fieldName" placeholder="Name")
+      <br />
+      <br />
+      label(for="fieldEmail") Email<br />
+      input(type="email" name="email" id="fieldName" placeholder="E-mail" required)
+      <br />
+      <br />
+      button(type="submit") subscribe
+
+      
+

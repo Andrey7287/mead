@@ -50,4 +50,3 @@ const MemoizedFib = function(){
   };
   return fib;
 };
-fibonachi()

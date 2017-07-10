@@ -15,7 +15,7 @@
   },
   "scripts": {
     "test": "mocha -u tdd -R spec tests/crosspage",
-    "start": "npm-watch run-node",
+    "start": "cross-env NODE_ENV=development npm-watch run-node",
     "run-node": "node index"
   },
   "repository": {
@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/Andrey7287/mead#readme",
   "dependencies": {
+    "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "express-compile-sass": "^3.0.4",
     "node-sass-middleware": "^0.11.0",
@@ -37,6 +38,7 @@
   },
   "devDependencies": {
     "chai": "^4.0.2",
+    "cross-env": "^5.0.1",
     "mocha": "^3.4.2",
     "npm-watch": "^0.2.0",
     "zombie": "^5.0.7"
