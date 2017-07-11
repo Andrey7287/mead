@@ -19,16 +19,35 @@ block content
     document.addEventListener('DOMContentLoaded', ()=>{
       const subscribeForm = document.forms.subscribe; 
       subscribeForm.addEventListener('submit', e=>{
-        console.log(e.target.elements);
+
         e.preventDefault();
+
         let action = subscribeForm.getAttribute('action'),
+            formData = new FormData(subscribeForm),
             container = document.getElementById('container'),
-            ajax = fetch(action, {
-              method: 'post',
-              body: this
-            });
-        console.log(this, e, ajax);
-        //method.body
+            headers = new Headers();
+
+        headers.append('Content-type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        headers.append('Accept', 'json');
+        //console.log('----===== start fetch =====-----');
+
+        fetch(action, {
+          method: 'post',
+          headers: headers,
+          body: formData
+        })
+        .then(
+          res => {
+            container.textContent = 'Succes!';
+            console.log(res);
+          }
+        )
+        .catch(
+          err => console.log(err)
+        );
+        
+        //console.log('----===== end fetch =====-----');
+  
 
       });
     });

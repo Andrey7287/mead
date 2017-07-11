@@ -61,8 +61,10 @@ app.post('/process', (req,res)=>{
 	// 						ref: ${req.body.ref}\n
 	// 						Name: ${req.body.name}\n
 	// 						Email: ${req.body.email}`);
-	if (req.xhr || req.accepts('json.html') === 'json' ) {
-		res.send({ success: true });
+	if (req.xhr && req.accepts('json,html') === 'json' ) {
+		res.send({ 
+			success: true
+		});
 	} else {
 		res.redirect(303, '/done' );
 	}
