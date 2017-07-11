@@ -15,7 +15,12 @@ suite('factorial(int)', function(){
 });
 suite('fibonachi(int)', function(){
   test('return fibonachi', function(){
-    assert(fibonachi(0) === 1 && fibonachi(1) === 1 && fibonachi(10) === 89 && fibonachi(20) === 10946);
+    assert(fibonachi(0) === 0 && fibonachi(3) === 2 && fibonachi(7) === 13);
+  });
+});
+suite('mFibonachi(int)', function(){
+  test('fibonachi throgh memoization', function(){
+    assert(mFibonachi(0) === 0 && mFibonachi(3) === 2 && mFibonachi(7) === 13 && mFibonachi(77) === 5527939700884757);
   });
 });
 
