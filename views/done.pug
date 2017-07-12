@@ -1,4 +1,7 @@
 extends layout
 
 block content
-  h2 You subscribed to news!
+  if isFile
+    h2 Uploaded !
+  else 
+    h2 You subscribed to news! 

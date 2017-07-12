@@ -4,6 +4,7 @@ const express = require('express'),
 			scss = require('node-sass-middleware'), 
       path = require('path'),
 			bodyParser = require('body-parser'),
+			formidable = require('formidable'),
 			publicPath = path.join(__dirname, 'public'),
 			fortune = require('./lib/fortune'),
 			getWeatherData = require('./lib/getWeather'), //not use
@@ -71,8 +72,28 @@ app.post('/process', (req,res)=>{
 });
 
 app.get('/done', (req,res)=>{
+	console.log(req.query.file);
 	res.render('done', {
-		title: 'succes'
+		title: 'succes',
+		isFile: req.query.file
+	});
+});
+
+app.get('/contest/vacation-photo', (req,res)=>{
+	let date = new Date();
+	res.render('vacation-photo', {
+		year: date.getFullYear(),
+		month: date.getMonth(),
+		title: 'Upload yours awsome photos'
+	});
+});
+
+app.post('/contest/vacation-photo/:year/:month', (req, res)=>{
+	let form = new formidable.IncomingForm();
+	form.parse(req, (err,fields,files)=>{
+		if(err) return res.redirect(303, '/error');
+		console.log(files);
+		res.redirect(303, '/done?file=1');
 	});
 });
 
@@ -81,6 +102,12 @@ app.get('/about', (req, res)=>{
 		title: 'About',
 		fortune: fortune.getFortune(),
 		pageTestScript: 'tests-about'
+	});
+});
+
+app.get('/error', (req, res)=>{
+	res.render('error', { 
+		title: 'Error'
 	});
 });
 

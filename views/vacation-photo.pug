@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h2 Upload photo
+    form(action="/contest/vacation-photo/"+year+"/"+month enctype="multipart/form-data" method="POST")
+      label(for="fieldName") name<br />
+      input(type="text" name="name")#fieldName
+      <br />
+      <br />
+      label(for="fieldMAil") mail<br />
+      input(type="email" name="email" required)#fieldMAil
+      <br />
+      <br />
+      label(for="fieldFile") file upload<br />
+      input(type="file" name="file" required accept="image/*")#fieldFile
+      <br />
+      <br />
+      input(type="submit" value="upload")
