@@ -3,9 +3,11 @@ const express = require('express'),
       pug = require('pug').create,
 			scss = require('node-sass-middleware'), 
       path = require('path'),
-      lazy = require('lazy-arr'),
 			bodyParser = require('body-parser'),
+			cookieParser = require('cookie-parser'),
+			credentials = require('./lib/credentials'),
 			formidable = require('formidable'),
+			expressSession = require('express-session'),
 			publicPath = path.join(__dirname, 'public'),
 			fortune = require('./lib/fortune'),
 			getWeatherData = require('./lib/getWeather'), //not use
@@ -24,13 +26,19 @@ app.use(scss({
 		sourceMap: true
 }));
 
+app.use(cookieParser(credentials.secret));
+app.use(expressSession({
+	resave: false,
+	saveUninitialized: false,
+	secret: credentials.secret
+}));
 app.use(express.static(publicPath));
 
 
 app.use((req,res,next)=>{
 	res.locals.showTests = !isProd && req.query.test === '1';
-	console.log(res.locals.showTests);
-	console.log(`Prodaction: ${isProd}`);
+	res.locals.alert = req.session.alert;
+	delete req.session.alert;
 	next();
 });
 
@@ -45,6 +53,9 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.get('/', (req, res)=>{
+	//res.cookie('monster', 'nom nom', { signed: true });
+	req.session.userName = 'anonymous';
+	let colorSheme = req.session.colorSheme || 'default';
 	res.render('index', {
 		title: 'Home'
 	});
