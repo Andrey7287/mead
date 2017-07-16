@@ -10,3 +10,52 @@ p{
 .error {
   color: red;
 }
+html {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  flex: auto;
+  margin: 0;
+}
+main {
+  flex-grow: 1;
+}
+.container {
+  width: 1170px;
+  margin: auto;
+}
+header {
+  background: #ccc;
+  padding: 10vmin 1rem;
+}
+nav {
+  
+  ul{
+    display: flex;
+    list-style: none;
+    padding: 0;
+  }
+  a {
+    padding: 12px;
+    background: #fff;
+    text-decoration: none;
+    font-size: 1.2em;
+    font-weight: 700;
+    color: #555;
+    &:hover {
+      background: #ccc;
+      text-decoration: underline;
+      color: #333;
+    }
+  }
+}
+footer {
+  background: #ccc;
+  color: #fff;
+  font-weight: 700;
+  padding: 10px 0 20px;
+}

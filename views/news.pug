@@ -9,10 +9,21 @@ block content
       <br />
       <br />
       label(for="fieldEmail") Email<br />
-      input(type="email" name="email" id="fieldName" placeholder="E-mail" required)
+      input(type="email" name="email" id="fieldEmail" placeholder="E-mail" required)
       <br />
       <br />
       button(type="submit") subscribe
+  h2 Check newseller
+    form(method="POST" name="newseller" action="/newseller")
+      label(for="fieldName2") name<br />
+      input(type="text" name="name" id="fieldName2" placeholder="Name")
+      <br />
+      <br />
+      label(for="fieldEmail2") Email<br />
+      input(type="email" name="email" id="fieldEmail2" placeholder="E-mail" required)
+      <br />
+      <br />
+      button(type="submit") send
   #container
   script.
     'use strict'
@@ -29,7 +40,7 @@ block content
 
         headers.append('Content-type', 'application/x-www-form-urlencoded; charset=UTF-8');
         headers.append('Accept', 'json');
-        //console.log('----===== start fetch =====-----');
+        console.log('----===== start fetch =====-----');
 
         fetch(action, {
           method: 'post',
@@ -46,7 +57,7 @@ block content
           err => console.log(err)
         );
         
-        //console.log('----===== end fetch =====-----');
+        console.log('----===== end fetch =====-----');
   
 
       });

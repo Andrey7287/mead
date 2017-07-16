@@ -61,6 +61,19 @@ app.get('/', (req, res)=>{
 	});
 });
 
+app.post('/newseller', (req,res)=>{
+	let name = req.body.name || '',
+			email = req.body.email;
+	req.session.alert = {
+		color: 'red',
+		txt: `Hello ${name}!`
+	}
+	res.redirect(303, '/newseller');
+});
+
+app.get('/newseller', (req,res)=>{
+	res.render('newseller');
+});
 
 app.get('/news', (req,res)=>{
 	res.render('news', {

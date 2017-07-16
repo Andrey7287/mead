@@ -7,17 +7,20 @@ html
       link(rel="stylesheet", href="/vendor/mocha.css")
   body
     header
-      img(src="/img/logo.png", alt="logo")
-      nav
-        ul
-          each link, name in {'home': '/', 'about': '/about?q=1', 'contacts': '/contacts', 'tdd': '/test-funcs?test=1', 'news': '/news', 'vacation-photo': '/contest/vacation-photo'}
-            li
-              a(href=link)= name 
+      .container
+        img(src="/img/logo.png", alt="logo")
+        nav
+          ul
+            each link, name in {'home': '/', 'about': '/about?q=1', 'contacts': '/contacts', 'tdd': '/test-funcs?test=1', 'news': '/news', 'vacation-photo': '/contest/vacation-photo'}
+              li
+                a(href=link)= name 
     main
-      block content
+      .container
+        block content
     footer
-      div.footer
-        div.copyright= 'all right resived'
+      .container
+        div.footer
+          div.copyright all right resived
     if scriptForPage
       script(src="/js/test-funcs.js")
     if showTests
