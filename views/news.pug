@@ -24,6 +24,21 @@ block content
       <br />
       <br />
       button(type="submit") send
+  h2 Send mail
+      form(method="post" action="/sending" name="mailer")
+        label(for="fieldName") Name<br />
+        input(type="text" name="name" id="fieldName")
+        <br />
+        <br />
+        label(for="fieldEmail") Email<br />
+        input(type="email" name="email" id="fieldEmail")
+        <br />
+        <br />
+        label(for="fieldText") Text<br />
+        textarea(name="text", cols="30", rows="10" id="fieldText")
+        <br />
+        <br />
+        button(type="submit") send
   #container
   script.
     'use strict'
