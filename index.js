@@ -9,10 +9,21 @@ const express = require('express'),
 	formidable = require('formidable'),
 	expressSession = require('express-session'),
 	nodemailer = require('nodemailer');
-publicPath = path.join(__dirname, 'public'),
+	publicPath = path.join(__dirname, 'public'),
 	fortune = require('./lib/fortune'),
 	getWeatherData = require('./lib/getWeather'), //not use
 	isProd = app.get('env') === 'production';
+
+switch(app.get('env')){
+	case 'development':
+		app.use(require('morgan')('dev'));
+		break;
+	case 'production':
+		app.use(require('express-logger')({
+			path: __dirname+'/log/requests.log'
+		}));
+		break;
+}
 
 app.set('port', process.env.PORT || 3000);
 
@@ -227,4 +238,4 @@ app.use((err, req, res, next) => {
 	res.render('500');
 });
 
-app.listen(app.get('port'), () => console.log(`Express is runing on localhost:${app.get('port')} press ctrl+c for closing up`));
+app.listen(app.get('port'), () => console.log(`Runing on localhost:${app.get('port')}. Env: ${app.get('env')} `));
