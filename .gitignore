@@ -7,3 +7,5 @@ coverage
 __nogit
 .idea
  credentials.js
+ log
+ 

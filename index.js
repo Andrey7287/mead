@@ -81,6 +81,14 @@ app.get('/', (req, res) => {
 	});
 });
 
+app.get('/fail', function(req, res){
+throw new Error('Нет!');
+});
+app.get('/epic-fail', function(req, res){
+	process.nextTick(function(){
+		throw new Error('Бабах!');
+	});
+});
 const VALID_EMAIL_REGEX = new RegExp('^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@' +
 '[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?' +
 '(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$');
