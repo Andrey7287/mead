@@ -8,7 +8,8 @@ const express = require('express'),
 	credentials = require('./lib/credentials'),
 	formidable = require('formidable'),
 	expressSession = require('express-session'),
-	nodemailer = require('nodemailer');
+	nodemailer = require('nodemailer'),
+	fs = require('fs'),
 	publicPath = path.join(__dirname, 'public'),
 	fortune = require('./lib/fortune'),
 	getWeatherData = require('./lib/getWeather'), //not use
@@ -70,7 +71,34 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.urlencoded({
 	extended: true
-}));
+})); 
+
+// app.use(function(req,res,next){
+// 	let domain = require('domain').create();
+// 	domain.on('error', err => {
+// 		console.error(`Domain Error: ${err.stack}`);
+// 		try {
+// 			setTimeout(function() {
+// 				console.error('Saifty shutdown');
+// 				process.exit(1);
+// 			}, 5000);
+// 			try {
+// 				next(err);
+// 			} catch(err) {
+// 				console.error(`Express could not rout this error: ${err.stack}`);
+// 				res.statusCode = 500;
+// 				res.setHeader('content-type', 'text/plain');
+// 				res.end('Server ERROR');
+// 			}
+// 		} catch(err) {
+// 			console.error(`Could not send response code - 500 ${err.stack}`)
+// 		}
+// 	});
+// 	domain.add(req);
+// 	domain.add(res);
+// 	domain.run(next);
+// });
+
 
 app.get('/', (req, res) => {
 	//res.cookie('monster', 'nom nom', { signed: true });
@@ -82,7 +110,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/fail', function(req, res){
-throw new Error('Нет!');
+	throw new Error('Нет!');
 });
 app.get('/epic-fail', function(req, res){
 	process.nextTick(function(){
@@ -182,12 +210,34 @@ app.get('/contest/vacation-photo', (req, res) => {
 	});
 });
 
+let dataDir = __dirname + '/data',
+		vacationPhotoDir = dataDir + '/vacation-photo';
+
+fs.existsSync(dataDir) || fs.mkdirSync(dataDir);
+fs.existsSync(vacationPhotoDir) || fs.mkdirSync(vacationPhotoDir);
+
+function saveContestEntry(contestName, email, year, month, photoPath){
+	// TODO
+}
+
 app.post('/contest/vacation-photo/:year/:month', (req, res) => {
 	let form = new formidable.IncomingForm();
 	form.parse(req, (err, fields, files) => {
 		if (err) return res.redirect(303, '/error');
-		console.log(files);
-		res.redirect(303, '/done?file=1');
+
+		//console.log(files);
+		//res.redirect(303, '/done?file=1');
+		
+		let photo = files.file,
+				dir = `${vacationPhotoDir}/${Date.now()}`,
+				path = `${dir}/${photo.name}`;
+				// console.log(dir);
+				// console.log(path);
+				fs.mkdirSync(dir);
+				fs.renameSync(photo.path, `${dir}/${photo.name}`)
+				saveContestEntry('vacation-photo', fields.email, req.params.year, req.params.month, path);
+				return res.redirect(303, '/done?file=1')
+
 	});
 });
 
@@ -246,4 +296,9 @@ app.use((err, req, res, next) => {
 	res.render('500');
 });
 
-app.listen(app.get('port'), () => console.log(`Runing on localhost:${app.get('port')}. Env: ${app.get('env')} `));
+function startServer(){
+	app.listen(app.get('port'), () => console.log(`Runing on localhost:${app.get('port')}. Env: ${app.get('env')} `));
+}
+
+require.main === module ? startServer() : module.exports = startServer;
+

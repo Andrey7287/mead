@@ -11,12 +11,23 @@
         "index.js"
       ],
       "extensions": "pug,scss,js"
+    },
+    "run-clusters": {
+      "patterns": [
+        "views",
+        "public",
+        "index.js"
+      ],
+      "extensions": "pug,scss,js"
     }
   },
   "scripts": {
-    "test": "mocha -u tdd -R spec tests/crosspage",
+    "crosspage-tests": "mocha -u tdd -R spec tests/crosspage",
+    "stress-tests": "mocha -u tdd -R spec tests/stress-tests",
     "start": "cross-env NODE_ENV=development npm-watch run-node",
+    "clusters": "cross-env NODE_ENV=development npm-watch run-node",
     "run-node": "node index",
+    "run-clusters": "node cluster",
     "prod": "cross-env NODE_ENV=production node index"
   },
   "repository": {
@@ -32,11 +43,13 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "cookie-parser": "^1.4.3",
+    "domain": "0.0.1",
     "express": "^4.15.3",
     "express-compile-sass": "^3.0.4",
     "express-logger": "0.0.3",
     "express-session": "^1.15.3",
     "formidable": "^1.1.1",
+    "loadtest": "^2.3.0",
     "morgan": "^1.8.2",
     "node-sass-middleware": "^0.11.0",
     "nodemailer": "^4.0.1",
@@ -47,6 +60,7 @@
     "chai": "^4.0.2",
     "cross-env": "^5.0.1",
     "mocha": "^3.4.2",
+    "morgan": "^1.8.2",
     "npm-watch": "^0.2.0",
     "zombie": "^5.0.7"
   }
