@@ -10,10 +10,13 @@ const express = require('express'),
 	expressSession = require('express-session'),
 	nodemailer = require('nodemailer'),
 	fs = require('fs'),
+	mongoose = require('mongoose'),
 	publicPath = path.join(__dirname, 'public'),
 	fortune = require('./lib/fortune'),
 	getWeatherData = require('./lib/getWeather'), //not use
-	isProd = app.get('env') === 'production';
+	isProd = app.get('env') === 'production',
+	Vacation = require('./models/vacation.js'),
+	VacationInSeasonListener = require('./models/vacationInSeasonListener.js');
 
 switch(app.get('env')){
 	case 'development':
@@ -25,6 +28,75 @@ switch(app.get('env')){
 		}));
 		break;
 }
+
+const opts = {
+	useMongoClient: true,
+	server: {
+		socketOptions: { keepAlive: 1 }
+	}
+};
+
+let db;
+switch (app.get('env')){
+	case 'development' :
+		db = mongoose.connect(credentials.mongo.development.connectionString, opts);
+		break;
+	case 'production' :
+		db = monoose.connect(credentials.mongo.development.connectionString, opts);
+		break;
+	default :
+		throw new Error(`Unknown environment ${app.get('env')}`);
+}
+
+Vacation.find((err, vacation)=>{
+	if(err) return console.error(err);
+	if(vacation.length) return;
+
+	const dataVacation = [{
+		name: 'Однодневный тур по реке Худ',
+		slug: 'hood-river-day-trip',
+		category: 'Однодневный тур',
+		sku: 'HR199',
+		description: 'Проведите день в плавании по реке Колумбия и насладитесь сваренным по традиционным рецептам пивом на реке Худ!',
+		priceInCents: 9995,
+		tags: ['однодневный тур','река худ','плавание','виндсерфинг','пивоварни'],
+		inSeason: true,
+		maximumGuests: 16,
+		available: true,
+		packagesSold: 0
+	},{
+		name: 'Отдых в Орегон Коуст',
+		slug: 'oregon-coast-getaway',
+		category: 'Отдых на выходных',
+		sku: 'OC39',
+		description: 'Насладитесь океанским воздухом и причудливыми прибрежными городками!',
+		priceInCents: 269995,
+		tags: ['отдых на выходных','орегон коуст','прогулки по пляжу'],
+		inSeason: false,
+		maximumGuests: 8,
+		available: true,
+		packagesSold: 0
+	},{
+		name: 'Скалолазание в Бенде',
+		slug: 'rock-climbing-in-bend',
+		category: 'Приключение',
+		sku: 'B99',
+		description: 'Пощекочите себе нервы горным восхождением на пустынной возвышенности.',
+		priceInCents: 289995,
+		tags: ['отдых на выходных','бенд','пустынная возвышенность','скалолазание'],
+		inSeason: true,
+		requiresWaiver: true,
+		maximumGuests: 4,
+		available: false,
+		packagesSold: 0,
+		notes: 'Гид по данному туру в настоящий момент восстанавливается после лыжной травмы.'
+	}];
+
+	dataVacation.forEach( tour => {
+		new Vacation(tour).save();
+	});
+	
+});
 
 app.set('port', process.env.PORT || 3000);
 
@@ -107,6 +179,43 @@ app.get('/', (req, res) => {
 	res.render('index', {
 		title: 'Home'
 	});
+});
+
+app.get('/vacation', (req, res)=>{
+	Vacation.find({available: true}, (err,vacations)=>{
+		if(err) console.error(`DB Error: ${err.stack}`);
+		let context = {
+			vacations: vacations.map(vacation => {
+				return {
+					sku: vacation.sku,
+					name: vacation.name,
+					descr: vacation.description,
+					price: vacation.getDisplayPrice(),
+					inSeason: vacation.inSeason
+				}
+			}) 
+		};
+		res.render('vacation', context); 
+	});
+});
+
+app.get('/notify', (req,res)=>{
+	res.render('notify', {sku: req.query.sku});
+});
+
+app.post('/notify', (req,res)=>{
+	VacationInSeasonListener.update(
+		{ email: req.body.email },
+		{ $push: { skus: req.body.sku} },
+		{ upsert: true },
+		function(err){
+			if(err) {
+				console.error(err.stack);
+				return res.redirect(303, '/vacation');
+			}
+			return res.redirect(303, '/vacation');
+		}
+	);
 });
 
 app.get('/fail', function(req, res){

@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h2 Vacation list
+  .vacation
+    each val in vacations 
+      .vacation__item
+        h3= val.name
+        p= val.descr
+        if val.inSeason
+          span(style="color: purple")= val.price
+          <br>
+          a(href="/cart/add?sku="+val.sku, title="title").btn Bay now!
+        else
+          span(style="color: darkpink") No season !  

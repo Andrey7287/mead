@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1 Notify me
+    form(action="/notify" method="POST")
+      input(type="hidden" name="sku" value=sku)
+      <br>
+      label(for="fieldEmail") Email
+      <br>
+      input(type="email" id="fieldEmail" name="email" required)
+      <br>
+      input(type="submit" value="send")
