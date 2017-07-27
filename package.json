@@ -59,7 +59,8 @@
     "node-sass-middleware": "^0.11.0",
     "nodemailer": "^4.0.1",
     "path": "^0.12.7",
-    "pug": "^2.0.0-rc.2"
+    "pug": "^2.0.0-rc.2",
+    "session-mongoose": "^0.5.2"
   },
   "devDependencies": {
     "chai": "^4.0.2",

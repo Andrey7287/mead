@@ -16,6 +16,8 @@ html
                 a(href=link)= name 
     main
       .container
+        if alert
+          .alert(style="color:"+alert.color)= alert.txt
         block content
     footer
       .container

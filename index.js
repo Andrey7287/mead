@@ -211,8 +211,16 @@ app.post('/notify', (req,res)=>{
 		function(err){
 			if(err) {
 				console.error(err.stack);
+				req.sesson.alert = {
+					color: 'red',
+					txt: 'Internal server Error, try latter'
+				};
 				return res.redirect(303, '/vacation');
 			}
+			req.session.alert = {
+				color: 'peru',
+				txt: 'We will be informed !'
+			};
 			return res.redirect(303, '/vacation');
 		}
 	);
