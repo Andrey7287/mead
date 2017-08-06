@@ -6,14 +6,14 @@ const express = require('express'),
 	bodyParser = require('body-parser'),
 	cookieParser = require('cookie-parser'),
 	credentials = require('./lib/credentials'),
-	formidable = require('formidable'),
 	expressSession = require('express-session'),
 	nodemailer = require('nodemailer'),
 	mongoose = require('mongoose'),
 	publicPath = path.join(__dirname, 'public'),
-	fortune = require('./lib/fortune'),
 	getWeatherData = require('./lib/getWeather'), //not use
-	isProd = app.get('env') === 'production';
+	isProd = app.get('env') === 'production',
+	fs = require('fs'),
+	autoView = {};
 
 switch(app.get('env')){
 	case 'development':
@@ -45,7 +45,7 @@ switch (app.get('env')){
 		throw new Error(`Unknown environment ${app.get('env')}`);
 }
 
-/* vacation */
+app.use('/api', require('cors')());
 
 app.set('port', process.env.PORT || 3000);
 
@@ -122,6 +122,16 @@ app.use(bodyParser.urlencoded({
 
 
 require('./routes.js')(app);
+
+app.use((req,res,next)=>{
+	let path = req.path.toLowerCase();
+	if ( autoView[path] ) return res.render(autoView[path]);
+	if ( fs.existsSync(`${__dirname}/views/${path}.pug`) ) {
+		autoView[path] = path.replace(/^\//,'');
+		res.render(autoView[path])
+	}
+	next();
+});
 
 app.use((req, res) => {
 	res.status(400);

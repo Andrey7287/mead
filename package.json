@@ -18,6 +18,8 @@
         "views",
         "public",
         "models",
+        "routes",
+        "routes.js",
         "index.js"
       ],
       "extensions": "pug,scss,js"
@@ -45,6 +47,7 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
     "domain": "0.0.1",
     "express": "^4.15.3",
     "express-compile-sass": "^3.0.4",
@@ -54,7 +57,7 @@
     "google-auth-library": "^0.10.0",
     "googleapis": "^20.1.0",
     "loadtest": "^2.3.0",
-    "mongoose": "^4.11.4",
+    "mongoose": "^4.11.5",
     "morgan": "^1.8.2",
     "node-sass-middleware": "^0.11.0",
     "nodemailer": "^4.0.1",
@@ -68,6 +71,7 @@
     "mocha": "^3.4.2",
     "morgan": "^1.8.2",
     "npm-watch": "^0.2.0",
+    "restler": "^3.4.0",
     "zombie": "^5.0.7"
   }
 }
