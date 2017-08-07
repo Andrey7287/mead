@@ -10,12 +10,23 @@ suite('API tests', function(){
     description: 'This is a test ...',
     email: 'test@gmail.com'  
   };
-  let base = 'http://localhost:3000';
-  test('test acces for adding attraction', function(done){
-    rest.post(base+'/api/attraction', {data:attraction}).on('succes', function(data){
-      assert(data.name === attraction.name);
-      assert(data.description === attraction.description);
+  let basePath = 'http://localhost:3000';
+
+  test('test acces for adding attraction', (done)=>{
+    rest.post(basePath+'/api/attraction', {data:attraction}).on('success', (data)=>{
+      //assert(data.name === attraction.name);
+      //assert(data.description === attraction.description);
+      console.log(data.name);
       done();
     })
+  });
+  test('test acces for getting attraction', (done)=>{
+    rest.post(basePath+'/api/attraction', {data:attraction}).on('success', (data)=>{
+      rest.get(apiPath+data.id).on('succes', (data)=>{
+        assert(data.name === attraction.name);
+        assert(data.description === attraction.description);
+        done();
+      });
+    });
   });
 });

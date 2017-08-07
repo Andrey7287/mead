@@ -9,6 +9,9 @@
         "views",
         "public",
         "models",
+        "routes",
+        "tests",
+        "routes.js",
         "index.js"
       ],
       "extensions": "pug,scss,js"
@@ -28,6 +31,7 @@
   "scripts": {
     "crosspage-tests": "mocha -u tdd -R spec tests/crosspage",
     "stress-tests": "mocha -u tdd -R spec tests/stress-tests",
+    "api-tests": "mocha -u tdd -R spec tests/api-tests",
     "start": "cross-env NODE_ENV=development npm-watch run-node",
     "clusters": "cross-env NODE_ENV=development npm-watch run-node",
     "run-node": "node index",

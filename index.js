@@ -13,7 +13,8 @@ const express = require('express'),
 	getWeatherData = require('./lib/getWeather'), //not use
 	isProd = app.get('env') === 'production',
 	fs = require('fs'),
-	autoView = {};
+	autoView = {},
+	Attraction = require('./models/attraction.js');
 
 switch(app.get('env')){
 	case 'development':
@@ -122,6 +123,53 @@ app.use(bodyParser.urlencoded({
 
 
 require('./routes.js')(app);
+
+app.get('/api/attractions', (req,res)=>{
+	Attraction.find({approved: true}, (err, attractions)=>{
+		if (err) return res.status(500).send('DB Error !');
+		res.json(attractions.map((a)=>{
+			return {
+				name:a.name,
+				id:a._id,
+				descriptions: a.descriptions,
+				location: a.location
+			}
+		}));
+	});
+});
+
+app.post('/api/attraction', (req,res)=>{
+	const a = new Attraction({
+		name: req.body.name,
+		description: req.body.description,
+		location: {
+			lat: req.body.lat,
+			lng: req.body.lng
+		},
+		history: {
+			event: 'created',
+			email: req.body.email,
+			date: new Date()
+		},
+		approved: false
+	});
+	a.save((err,a)=>{
+		if(err) return res.status(500).send('DB Error');
+		res.json({id: a._id});
+	});
+});
+
+app.get('/api/attraction/:id', (req,res)=>{
+	Attraction.findById(req.params.id, (err,a)=>{
+		if(err) return res.status(500).send('DB Error');
+		res.json({
+			name: a.name,
+			id: a._id,
+			description: a.description,
+			location: a.location
+		});
+	});
+});
 
 app.use((req,res,next)=>{
 	let path = req.path.toLowerCase();
