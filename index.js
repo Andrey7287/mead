@@ -155,18 +155,22 @@ app.post('/api/attraction', (req,res)=>{
 	});
 	a.save((err,a)=>{
 		if(err) return res.status(500).send('DB Error');
-		res.json({id: a._id});
-	});
-});
-
-app.get('/api/attraction/:id', (req,res)=>{
-	Attraction.findById(req.params.id, (err,a)=>{
-		if(err) return res.status(500).send('DB Error');
 		res.json({
 			name: a.name,
 			id: a._id,
 			description: a.description,
 			location: a.location
+		});
+	});
+});
+
+app.get('/api/attraction/:id', (req,res)=>{
+	Attraction.findById(req.params.id, (err,obj)=>{
+		if(err) return res.status(500).send('DB Error');
+		res.json({
+			name: obj.name,
+			description: obj.description,
+			location: obj.location
 		});
 	});
 });

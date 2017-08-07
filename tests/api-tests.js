@@ -14,15 +14,14 @@ suite('API tests', function(){
 
   test('test acces for adding attraction', (done)=>{
     rest.post(basePath+'/api/attraction', {data:attraction}).on('success', (data)=>{
-      //assert(data.name === attraction.name);
-      //assert(data.description === attraction.description);
-      console.log(data.name);
+      assert(data.name === attraction.name);
+      assert(data.description === attraction.description);
       done();
     })
   });
   test('test acces for getting attraction', (done)=>{
     rest.post(basePath+'/api/attraction', {data:attraction}).on('success', (data)=>{
-      rest.get(apiPath+data.id).on('succes', (data)=>{
+      rest.get(basePath+'/api/attraction/'+data.id).on('complete', (obj)=>{
         assert(data.name === attraction.name);
         assert(data.description === attraction.description);
         done();
