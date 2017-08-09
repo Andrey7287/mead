@@ -9,6 +9,7 @@ const express = require('express'),
 	expressSession = require('express-session'),
 	nodemailer = require('nodemailer'),
 	mongoose = require('mongoose'),
+	rest = require('connect-rest'),
 	publicPath = path.join(__dirname, 'public'),
 	getWeatherData = require('./lib/getWeather'), //not use
 	isProd = app.get('env') === 'production',
@@ -124,45 +125,45 @@ app.use(bodyParser.urlencoded({
 
 require('./routes.js')(app);
 
-app.get('/api/attractions', (req,res)=>{
-	Attraction.find({approved: true}, (err, attractions)=>{
-		if (err) return res.status(500).send('DB Error !');
-		res.json(attractions.map((a)=>{
-			return {
-				name:a.name,
-				id:a._id,
-				descriptions: a.descriptions,
-				location: a.location
-			}
-		}));
-	});
-});
+// app.get('/api/attractions', (req,res)=>{
+// 	Attraction.find({approved: true}, (err, attractions)=>{
+// 		if (err) return res.status(500).send('DB Error !');
+// 		res.json(attractions.map((a)=>{
+// 			return {
+// 				name:a.name,
+// 				id:a._id,
+// 				descriptions: a.descriptions,
+// 				location: a.location
+// 			}
+// 		}));
+// 	});
+// });
 
-app.post('/api/attraction', (req,res)=>{
-	const a = new Attraction({
-		name: req.body.name,
-		description: req.body.description,
-		location: {
-			lat: req.body.lat,
-			lng: req.body.lng
-		},
-		history: {
-			event: 'created',
-			email: req.body.email,
-			date: new Date()
-		},
-		approved: false
-	});
-	a.save((err,a)=>{
-		if(err) return res.status(500).send('DB Error');
-		res.json({
-			name: a.name,
-			id: a._id,
-			description: a.description,
-			location: a.location
-		});
-	});
-});
+// app.post('/api/attraction', (req,res)=>{
+// 	const a = new Attraction({
+// 		name: req.body.name,
+// 		description: req.body.description,
+// 		location: {
+// 			lat: req.body.lat,
+// 			lng: req.body.lng
+// 		},
+// 		history: {
+// 			event: 'created',
+// 			email: req.body.email,
+// 			date: new Date()
+// 		},
+// 		approved: false
+// 	});
+// 	a.save((err,a)=>{
+// 		if(err) return res.status(500).send('DB Error');
+// 		res.json({
+// 			name: a.name,
+// 			id: a._id,
+// 			description: a.description,
+// 			location: a.location
+// 		});
+// 	});
+// });
 
 app.get('/api/attraction/:id', (req,res)=>{
 	Attraction.findById(req.params.id, (err,obj)=>{
@@ -183,6 +184,64 @@ app.use((req,res,next)=>{
 		res.render(autoView[path])
 	}
 	next();
+});
+
+const apiOptions = {
+	context: '/api',
+	domain: require('domain').create()
+}
+
+app.use(rest.rester(apiOptions));
+
+rest.get('/attractions', (req,content,cb)=>{
+	Attraction.find({approved: true}, (err, attractions)=>{
+		if (err) return cb({error: 'Internal servererror'});
+		cb(null, attractions.map((a)=>{
+			return {
+				name:a.name,
+				id:a._id,
+				descriptions: a.descriptions,
+				location: a.location
+			}
+		}));
+	});
+});
+
+rest.post('/attraction', (req,content, cb)=>{
+	const a = new Attraction({
+		name: req.body.name,
+		description: req.body.description,
+		location: {
+			lat: req.body.lat,
+			lng: req.body.lng
+		},
+		history: {
+			event: 'created',
+			email: req.body.email,
+			date: new Date()
+		},
+		approved: false
+	});
+	a.save((err,a)=>{
+		if(err) return cb({error: 'Cann`t add!'});
+		cb(null, {
+			name: a.name,
+			id: a._id,
+			description: a.description,
+			location: a.location
+		});
+	});
+});
+
+rest.get('/attraction/:id', (req,content,cb)=>{
+	Attraction.findById(req.params.id, (err,obj)=>{
+		if(err) return cb({error: 'Cann`t get!'});
+		cb(null, {
+			name: obj.name,
+			description: obj.description,
+			location: obj.location
+		});
+	});
 });
 
 app.use((req, res) => {

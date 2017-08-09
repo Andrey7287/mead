@@ -6,7 +6,7 @@ suite('API tests', function(){
   let attraction = {
     lat: 45.516011,
     lng: -122.682062,
-    name: 'Museum',
+    name: 'Museum', 
     description: 'This is a test ...',
     email: 'test@gmail.com'  
   };
