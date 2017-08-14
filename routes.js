@@ -8,6 +8,7 @@ const main = require('./routes/main'),
 function routsHandler(app) {
   app.get('/', main.home);
   app.get('/about', main.about);
+  app.get('/login', main.login);
   app.get('/vacation', vacation.vacation);
   app.get('/contest/vacation-photo', vacation.contest);
   app.post('/contest/vacation-photo/:year/:month', posts.contest);

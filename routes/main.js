@@ -15,4 +15,9 @@ exports.about =  (req, res) => {
     pageTestScript: 'tests-about'
   });
 };
+exports.login =  (req, res) => {
+  res.render('login', {
+    title: 'Personal'
+  });
+};
 

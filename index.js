@@ -9,7 +9,6 @@ const express = require('express'),
 	expressSession = require('express-session'),
 	nodemailer = require('nodemailer'),
 	mongoose = require('mongoose'),
-	rest = require('connect-rest'),
 	publicPath = path.join(__dirname, 'public'),
 	getWeatherData = require('./lib/getWeather'), //not use
 	isProd = app.get('env') === 'production',
@@ -186,12 +185,16 @@ app.use((req,res,next)=>{
 	next();
 });
 
-const apiOptions = {
+// const apiOptions = {
+// 	context: '/api',
+// 	domain: require('domain').create()
+// }
+
+//app.use(rest.rester(apiOptions));
+const rest = require('connect-rest').create({
 	context: '/api',
 	domain: require('domain').create()
-}
-
-app.use(rest.rester(apiOptions));
+});
 
 rest.get('/attractions', (req,content,cb)=>{
 	Attraction.find({approved: true}, (err, attractions)=>{
