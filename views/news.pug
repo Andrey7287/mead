@@ -40,10 +40,18 @@ block content
         <br />
         button(type="submit") send
   #container
+  script(src="/js/temp.js")
+  script(src="https://code.jquery.com/jquery-3.2.1.js")
   script.
     'use strict'
     document.addEventListener('DOMContentLoaded', ()=>{
-      const subscribeForm = document.forms.subscribe; 
+      const subscribeForm = document.forms.subscribe;
+      let $email = $('#fieldEmail'),
+          pattern = new EmailPattern(),
+          validateEmail = new Validator($email,pattern,'Oh ho ho!!!');
+
+      validateEmail.validate();
+
       subscribeForm.addEventListener('submit', e=>{
 
         e.preventDefault();
