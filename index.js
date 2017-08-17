@@ -46,6 +46,16 @@ switch (app.get('env')){
 		throw new Error(`Unknown environment ${app.get('env')}`);
 }
 
+const auth = require('./lib/auth.js')(app, {
+	baseUrl: process.env.BASE_URL,
+	providers: credentials.authProviders,
+	successRedirect: '/account',
+	failureRedirect: '/unauthorized'
+});
+
+//auth.init();
+//`auth.registerRoutes();
+
 app.use('/api', require('cors')());
 
 app.set('port', process.env.PORT || 3000);
