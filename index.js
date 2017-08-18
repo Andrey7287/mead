@@ -53,8 +53,8 @@ const auth = require('./lib/auth.js')(app, {
 	failureRedirect: '/unauthorized'
 });
 
-//auth.init();
-//`auth.registerRoutes();
+auth.init();
+auth.registerRoutes();
 
 app.use('/api', require('cors')());
 

@@ -6,6 +6,15 @@ const main = require('./routes/main'),
       news = require('./routes/news'),
       user = require('./routes/user');
 
+const customerOnly = (req,res,next)=>{
+  if ( req.user && req.user.role === 'customer' ) return next();
+  res.redirect(303, '/unauthorized');
+;}
+const employeeOnly = (req,res,next)=>{
+  if ( req.user && req.user.role === 'employee' ) return next();
+  next('route');
+};
+
 function routsHandler(app) {
   app.get('/', main.home);
   app.get('/about', main.about);
@@ -30,6 +39,9 @@ function routsHandler(app) {
   app.get('/error', other.error);
   app.get('/headers', tests.headers);
   app.get('/unauthorized', user.unauthorized);
+  app.get('/account', customerOnly, user.account);
+  app.get('/account/order-history', customerOnly, user.account);
+  app.get('/sales', employeeOnly, user.sales);
 }
 
 module.exports = routsHandler;
