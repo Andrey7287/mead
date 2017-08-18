@@ -8,7 +8,8 @@ html
   body
     header
       .container
-        img(src="/img/logo.png", alt="logo")
+        a(href="/") 
+          img(src="/img/logo.png", alt="logo")
         nav
           ul
             each link, name in {'home': '/', 'about': '/about?q=1', 'contacts': '/contacts', 'tdd': '/test-funcs?test=1', 'news': '/news','vacation': '/vacation', 'vacation-photo': '/contest/vacation-photo', 'login': '/login', 'xhr-test': '/xhr-test'}

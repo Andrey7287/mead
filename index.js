@@ -45,6 +45,24 @@ switch (app.get('env')){
 	default :
 		throw new Error(`Unknown environment ${app.get('env')}`);
 }
+const auth = require('./lib/auth.js')(app, {
+	baseUrl: process.env.BASE_URL,
+	providers: credentials.authProviders,
+	successRedirect: '/account',
+	failureRedirect: '/unauthorized'
+});
+
+auth.init();
+auth.registerRoutes();
+const auth = require('./lib/auth.js')(app, {
+	baseUrl: process.env.BASE_URL,
+	providers: credentials.authProviders,
+	successRedirect: '/account',
+	failureRedirect: '/unauthorized'
+});
+
+auth.init();
+auth.registerRoutes();
 
 app.use('/api', require('cors')());
 

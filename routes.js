@@ -3,7 +3,17 @@ const main = require('./routes/main'),
       tests = require('./routes/tests'),
       posts = require('./routes/posts'),
       other = require('./routes/other'),
-      news = require('./routes/news');
+      news = require('./routes/news'),
+      user = require('./routes/user');
+
+const customerOnly = (req,res,next)=>{
+  if ( req.user && req.user.role === 'customer' ) return next();
+  res.redirect(303, '/unauthorized');
+;}
+const employeeOnly = (req,res,next)=>{
+  if ( req.user && req.user.role === 'employee' ) return next();
+  next('route');
+};
 
 function routsHandler(app) {
   app.get('/', main.home);
@@ -28,7 +38,14 @@ function routsHandler(app) {
   app.get('/done', other.done);
   app.get('/error', other.error);
   app.get('/headers', tests.headers);
+<<<<<<< HEAD
   app.post('/xhrtest', posts.xhrtest);
+=======
+  app.get('/unauthorized', user.unauthorized);
+  app.get('/account', customerOnly, user.account);
+  app.get('/account/order-history', customerOnly, user.account);
+  app.get('/sales', employeeOnly, user.sales);
+>>>>>>> ee8d9c0012c2d58075f99e4c00bc6b03e8920b44
 }
 
 module.exports = routsHandler;
