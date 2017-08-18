@@ -54,6 +54,17 @@ const auth = require('./lib/auth.js')(app, {
 
 auth.init();
 auth.registerRoutes();
+
+const auth = require('./lib/auth.js')(app, {
+	baseUrl: process.env.BASE_URL,
+	providers: credentials.authProviders,
+	successRedirect: '/account',
+	failureRedirect: '/unauthorized'
+});
+
+auth.init();
+auth.registerRoutes();
+
 const auth = require('./lib/auth.js')(app, {
 	baseUrl: process.env.BASE_URL,
 	providers: credentials.authProviders,

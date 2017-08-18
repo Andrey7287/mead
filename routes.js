@@ -39,12 +39,18 @@ function routsHandler(app) {
   app.get('/error', other.error);
   app.get('/headers', tests.headers);
 <<<<<<< HEAD
+<<<<<<< HEAD
   app.post('/xhrtest', posts.xhrtest);
 =======
+=======
+>>>>>>> ee8d9c0012c2d58075f99e4c00bc6b03e8920b44
   app.get('/unauthorized', user.unauthorized);
   app.get('/account', customerOnly, user.account);
   app.get('/account/order-history', customerOnly, user.account);
   app.get('/sales', employeeOnly, user.sales);
+<<<<<<< HEAD
+>>>>>>> ee8d9c0012c2d58075f99e4c00bc6b03e8920b44
+=======
 >>>>>>> ee8d9c0012c2d58075f99e4c00bc6b03e8920b44
 }
 
