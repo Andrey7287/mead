@@ -3,7 +3,8 @@ const main = require('./routes/main'),
       tests = require('./routes/tests'),
       posts = require('./routes/posts'),
       other = require('./routes/other'),
-      news = require('./routes/news');
+      news = require('./routes/news'),
+      user = require('./routes/user');
 
 function routsHandler(app) {
   app.get('/', main.home);
@@ -28,6 +29,7 @@ function routsHandler(app) {
   app.get('/done', other.done);
   app.get('/error', other.error);
   app.get('/headers', tests.headers);
+  app.get('/unauthorized', user.unauthorized);
 }
 
 module.exports = routsHandler;
