@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  h2 Page was made for testing xhr
+  form(action="/xhrtest" name="xForm")
+    input(type="text" placeholder="any" name="text")
+    input(type="submit" id="forXhr" value="send")
+  script(src="/js/test-xhr.js")

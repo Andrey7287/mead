@@ -25,7 +25,7 @@ block content
       <br />
       button(type="submit") send
   h2 Send mail
-      form(method="post" action="/sending" name="mailer")
+      form(method="POST" action="/sending" name="mailer")
         label(for="fieldName") Name<br />
         input(type="text" name="name" id="fieldName")
         <br />
@@ -40,17 +40,10 @@ block content
         <br />
         button(type="submit") send
   #container
-  script(src="/js/temp.js")
-  script(src="https://code.jquery.com/jquery-3.2.1.js")
   script.
     'use strict'
     document.addEventListener('DOMContentLoaded', ()=>{
       const subscribeForm = document.forms.subscribe;
-      let $email = $('#fieldEmail'),
-          pattern = new EmailPattern(),
-          validateEmail = new Validator($email,pattern,'Oh ho ho!!!');
-
-      validateEmail.validate();
 
       subscribeForm.addEventListener('submit', e=>{
 
@@ -64,7 +57,6 @@ block content
         headers.append('Content-type', 'application/x-www-form-urlencoded; charset=UTF-8');
         headers.append('Accept', 'json');
         console.log('----===== start fetch =====-----');
-
         fetch(action, {
           method: 'post',
           headers: headers,

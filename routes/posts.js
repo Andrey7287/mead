@@ -75,10 +75,10 @@ exports.newseller = (req, res) => {
 }
 
 exports.process = (req, res) => {
-  // console.log(`Form from: ${req.query.form}\n
-  // 						ref: ${req.body.ref}\n
-  // 						Name: ${req.body.name}\n
-  // 						Email: ${req.body.email}`);
+  console.log(`Form from: ${req.query.form}\n
+  						ref: ${req.body.ref}\n
+  						Name: ${req.body.name}\n
+  						Email: ${req.body.email}`);
   if (req.xhr && req.accepts('json,html') === 'json') {
     res.send({
       success: true
@@ -116,3 +116,6 @@ exports.contest = (req, res) => {
 
   });
 };
+exports.xhrtest = (req,res)=>{
+  console.log(req.body.name);
+}

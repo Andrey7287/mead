@@ -28,6 +28,7 @@ function routsHandler(app) {
   app.get('/done', other.done);
   app.get('/error', other.error);
   app.get('/headers', tests.headers);
+  app.post('/xhrtest', posts.xhrtest);
 }
 
 module.exports = routsHandler;
